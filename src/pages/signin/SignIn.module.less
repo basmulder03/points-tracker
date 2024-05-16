@@ -1,0 +1,47 @@
+.container {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .signInBox {
+    aspect-ratio: 1/1;
+    background-color: #fff;
+    min-width: 512px;
+    border-radius: 32px;
+    padding: 16px;
+
+    form {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+
+      .input {
+        width: 100%;
+        padding: 16px;
+        border-radius: 32px;
+        flex: 1 0 auto;
+        margin: 16px 0;
+      }
+
+      .submitButton {
+        width: 100%;
+        color: white;
+        padding: 16px;
+        border-radius: 32px;
+
+        &:not([disabled]) {
+          background-color: blueviolet;
+        }
+
+        &:disabled {
+          background-color: #e4afff !important;
+        }
+      }
+    }
+  }
+}
