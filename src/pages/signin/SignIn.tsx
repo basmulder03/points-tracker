@@ -2,6 +2,9 @@ import styles from "./SignIn.module.less"
 import {SubmitHandler, useForm} from "react-hook-form";
 import {signInWithEmailAndPassword} from "firebase/auth";
 import {auth} from "../../firebase/initializeFirebase.ts";
+import {useNavigate} from "react-router-dom";
+import {useContext, useEffect} from "react";
+import {UserContext} from "../../contexts/UserContext.tsx";
 
 type Inputs = {
     email: string;
@@ -9,6 +12,9 @@ type Inputs = {
 }
 
 const SignIn = () => {
+    const navigate = useNavigate();
+    const user = useContext(UserContext);
+
     const {
         register,
         handleSubmit,
@@ -16,6 +22,12 @@ const SignIn = () => {
     } = useForm<Inputs>({mode: "all"});
     const onSubmit: SubmitHandler<Inputs> = (data) =>
         signInWithEmailAndPassword(auth, data.email, data.password)
+
+    useEffect(() => {
+        if (user?.uid) {
+            navigate("/points");
+        }
+    }, [user]);
 
     return (
         <div className={styles.container}>
