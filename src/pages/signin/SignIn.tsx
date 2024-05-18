@@ -13,21 +13,24 @@ type Inputs = {
 
 const SignIn = () => {
     const navigate = useNavigate();
-    const user = useContext(UserContext);
+    const {isLoggedIn, user} = useContext(UserContext);
 
     const {
         register,
         handleSubmit,
         formState: {dirtyFields}
     } = useForm<Inputs>({mode: "all"});
-    const onSubmit: SubmitHandler<Inputs> = (data) =>
-        signInWithEmailAndPassword(auth, data.email, data.password)
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        await signInWithEmailAndPassword(auth, data.email, data.password);
+        navigate("/settings");
+    }
 
     useEffect(() => {
-        if (user?.uid) {
-            navigate("/points");
+        if (isLoggedIn) {
+            console.log('isLoggedIn')
+            navigate(-1)
         }
-    }, [user]);
+    }, [isLoggedIn, user]);
 
     return (
         <div className={styles.container}>

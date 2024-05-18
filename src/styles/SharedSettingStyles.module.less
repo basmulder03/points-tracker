@@ -1,0 +1,22 @@
+.category {
+  flex: 1;
+
+  &:not(:last-child) {
+    border-right: 1px solid darkgray;
+  }
+
+  .itemContent {
+    .listItem {
+      font-family: "Agency FB", serif;
+      border-bottom: 1px solid darkgray;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &:hover, &.active {
+        background-color: #cfc5bb;
+      }
+    }
+  }
+}

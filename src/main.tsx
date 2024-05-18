@@ -1,12 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, redirect, RouterProvider} from "react-router-dom";
 import Dashboard from "./pages/dashboard/Dashboard.tsx";
 import SignIn from "./pages/signin/SignIn.tsx";
 import UserContextProvider from "./contexts/UserContext.tsx";
 import Points from "./pages/points/Points.tsx";
-import TeamManagement from "./pages/teamManagement/TeamManagement.tsx";
+import Settings from "./pages/settings/Settings.tsx";
+import EventSelector from "./components/eventSelector/EventSelector.tsx";
+import TeamSetting from "./components/teamSetting/TeamSetting.tsx";
+import PartSetting from "./components/partSetting/PartSetting.tsx";
 
 const router = createBrowserRouter([
     {
@@ -22,8 +25,34 @@ const router = createBrowserRouter([
         element: <Points/>
     },
     {
-        path: "/points/team-management",
-        element: <TeamManagement/>
+        path: "/settings",
+        element: <Settings/>,
+        children: [
+            {
+                index: true,
+                loader: async () => redirect("teams")
+            },
+            {
+                path: "teams",
+                element: <EventSelector/>,
+                children: [
+                    {
+                        path: ":docId",
+                        element: <TeamSetting/>
+                    }
+                ]
+            },
+            {
+                path: "parts",
+                element: <EventSelector/>,
+                children: [
+                    {
+                        path: ":docId",
+                        element: <PartSetting/>
+                    }
+                ]
+            }
+        ]
     }
 ])
 

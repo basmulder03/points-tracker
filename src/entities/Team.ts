@@ -1,5 +1,3 @@
-type Team = {
+export type Team = {
     name: string;
 }
-
-export default Team;
