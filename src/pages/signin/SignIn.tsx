@@ -27,8 +27,7 @@ const SignIn = () => {
 
     useEffect(() => {
         if (isLoggedIn) {
-            console.log('isLoggedIn')
-            navigate(-1)
+            navigate('/settings')
         }
     }, [isLoggedIn, user]);
 

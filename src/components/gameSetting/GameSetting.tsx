@@ -1,12 +1,12 @@
 import styles from "../../styles/SharedSettingStyles.module.less";
 import SettingHeader from "../settingHeader/SettingHeader.tsx";
 
-const PartSetting = () => {
+const GameSetting = () => {
     return (
         <div className={styles.category}>
-            <SettingHeader title="Part" />
+            <SettingHeader title="Game"/>
         </div>
     )
 }
 
-export default PartSetting;
+export default GameSetting;

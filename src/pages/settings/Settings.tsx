@@ -14,11 +14,11 @@ const Settings = () => {
         await signOut(auth);
     }
 
-    const navigateToSetting = async (setting: "teams" | "parts") => {
+    const navigateToSetting = async (setting: "teams" | "games") => {
         navigate(`/settings/${setting}`);
     }
 
-    const hasSubPath = (subPath: "teams" | "parts"): boolean => location.pathname.toLowerCase().includes(subPath.toLowerCase());
+    const hasSubPath = (subPath: "teams" | "games"): boolean => location.pathname.toLowerCase().includes(subPath.toLowerCase());
 
     useEffect(() => {
         if (!isLoggedIn) navigate("/login");
@@ -35,8 +35,9 @@ const Settings = () => {
                 <div className={`${styles.link} ${hasSubPath("teams") && styles.active}`} onClick={() => navigateToSetting("teams")}>
                     Team Settings
                 </div>
-                <div className={`${styles.link} ${hasSubPath("parts") && styles.active}`} onClick={() => navigateToSetting("parts")}>
-                    Parts
+                <div className={`${styles.link} ${hasSubPath("games") && styles.active}`}
+                     onClick={() => navigateToSetting("games")}>
+                    Games
                 </div>
             </div>
             <div className={styles.content}>

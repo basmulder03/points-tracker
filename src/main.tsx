@@ -4,12 +4,12 @@ import './index.css'
 import {createBrowserRouter, redirect, RouterProvider} from "react-router-dom";
 import Dashboard from "./pages/dashboard/Dashboard.tsx";
 import SignIn from "./pages/signin/SignIn.tsx";
-import UserContextProvider from "./contexts/UserContext.tsx";
 import Points from "./pages/points/Points.tsx";
 import Settings from "./pages/settings/Settings.tsx";
 import EventSelector from "./components/eventSelector/EventSelector.tsx";
 import TeamSetting from "./components/teamSetting/TeamSetting.tsx";
-import PartSetting from "./components/partSetting/PartSetting.tsx";
+import GameSetting from "./components/gameSetting/GameSetting.tsx";
+import Providers from "./contexts/Providers.tsx";
 
 const router = createBrowserRouter([
     {
@@ -43,12 +43,12 @@ const router = createBrowserRouter([
                 ]
             },
             {
-                path: "parts",
+                path: "games",
                 element: <EventSelector/>,
                 children: [
                     {
                         path: ":docId",
-                        element: <PartSetting/>
+                        element: <GameSetting/>
                     }
                 ]
             }
@@ -58,8 +58,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-      <UserContextProvider>
+      <Providers>
           <RouterProvider router={router}/>
-      </UserContextProvider>
+      </Providers>
   </React.StrictMode>,
 )
