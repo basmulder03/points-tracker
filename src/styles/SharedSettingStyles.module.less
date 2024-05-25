@@ -15,6 +15,34 @@
       justify-content: space-between;
       align-items: center;
 
+      small {
+        font-style: italic;
+        margin: 0 8px;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .name {
+        display: flex;
+        align-items: center;
+
+        .deleteIcon {
+          color: red;
+          margin-right: 8px;
+          display: none;
+
+          &:hover {
+            color: darkred;
+          }
+        }
+      }
+
+      &:hover .deleteIcon {
+        display: block;
+      }
+
       &:hover:not(.active) {
         cursor: pointer;
       }

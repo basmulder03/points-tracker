@@ -5,35 +5,42 @@ import {collections} from "../firebase/collections.ts";
 import {RunningEvent} from "../entities/RunningEvent.ts";
 import {stringCompareFunction} from "../helpers/sortStrings.ts";
 
-const EventContext = createContext<RunningEvent[]>([]);
+const EventContext = createContext<{
+    allEvents: RunningEvent[],
+    activeEvent: RunningEvent | null,
+    hasActiveEvent: boolean
+}>({
+    allEvents: [],
+    activeEvent: null,
+    hasActiveEvent: false
+});
 
 const EventContextProvider = (props: React.PropsWithChildren) => {
     const [events, setEvents] = useState<RunningEvent[]>([]);
+    const [activeEvent, setActiveEvent] = useState<RunningEvent | null>(null);
+    const [hasActiveEvent, setHasActiveEvent] = useState(false);
 
     useEffect(() => {
         const q = query(collection(db, collections.events))
         const unsub = onSnapshot(q, (snapshot) => {
             const newEventList: {[docId: string]: RunningEvent} = {};
-            events.forEach(event => newEventList[event.documentId] = event);
-            console.log("got new changes", newEventList);
-            snapshot.docChanges().forEach((change) => {
-                console.log(change)
-                if (change.type === "added" || change.type === "modified") {
-                    newEventList[change.doc.id] = {
-                        name: change.doc.data().name,
-                        isActive: change.doc.data().isActive,
-                        documentId: change.doc.id
-                    }
-                } else if (change.type === "removed") {
-                    delete newEventList[change.doc.id];
+
+            snapshot.forEach(doc => {
+                newEventList[doc.id] = {
+                    name: doc.data().name,
+                    isActive: doc.data().isActive,
+                    documentId: doc.id
                 }
             });
 
-            var newEvents = Object.values(newEventList);
+            const newEvents = Object.values(newEventList);
             newEvents.sort((a, b) => stringCompareFunction(a.name, b.name));
-
             setEvents(newEvents);
-            console.log('Added events', newEvents)
+
+            const newActiveEvent = newEvents.find(event => event.isActive)
+            setActiveEvent(newActiveEvent || null)
+            setHasActiveEvent(newActiveEvent !== null);
+            console.log('Added events', newEvents, 'and set active event', newActiveEvent)
         })
 
         return () => {
@@ -42,7 +49,7 @@ const EventContextProvider = (props: React.PropsWithChildren) => {
     }, []);
 
     return (
-        <EventContext.Provider value={events}>
+        <EventContext.Provider value={{allEvents: events, activeEvent, hasActiveEvent}}>
             {props.children}
         </EventContext.Provider>
     )

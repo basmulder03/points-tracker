@@ -1,4 +1,4 @@
-import {addDoc, collection} from "firebase/firestore"
+import {addDoc, collection, deleteDoc, doc, writeBatch} from "firebase/firestore"
 import {db} from "../initializeFirebase.ts";
 import {collections} from "../collections.ts";
 
@@ -9,4 +9,24 @@ export const createNewEvent = async (eventName: string) => {
     });
 
     console.log("Document written with ID: ", docRef.id);
+}
+
+export const removeEvent = async (documentId: string) => {
+    await deleteDoc(doc(db, collections.events, documentId));
+}
+
+export const setActiveEvent = async (activeDocumentId: string, allDocumentIds: string[]) => {
+    const batch = writeBatch(db);
+
+    for (const docId of allDocumentIds) {
+        if (docId === activeDocumentId) continue;
+
+        const docRef = doc(db, collections.events, docId);
+        batch.update(docRef, {isActive: false});
+    }
+
+    const activeDocRef = doc(db, collections.events, activeDocumentId);
+    batch.update(activeDocRef, {isActive: true});
+
+    await batch.commit();
 }
