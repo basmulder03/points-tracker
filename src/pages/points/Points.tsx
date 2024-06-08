@@ -1,6 +1,6 @@
 import {useContext, useEffect} from "react";
 import {UserContext} from "../../contexts/UserContext.tsx";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {signOut} from "firebase/auth";
 import {auth} from "../../firebase/initializeFirebase.ts";
 
@@ -10,10 +10,10 @@ const Points = () => {
 
 
     useEffect(() => {
-        if (!user?.uid) {
+        if (!user.isLoggedIn) {
             navigate("/login");
         }
-    }, [user]);
+    }, []);
 
     const logOut = async () => {
         await signOut(auth);
@@ -21,7 +21,6 @@ const Points = () => {
 
     return (
         <>
-            <Link to="/points/team-management">Team Management</Link>
             <button onClick={logOut}>Sign out</button>
         </>
     )

@@ -1,6 +1,8 @@
 import {addDoc, collection, deleteDoc, doc, writeBatch} from "firebase/firestore"
 import {db} from "../initializeFirebase.ts";
 import {collections} from "../collections.ts";
+import {removeTeamsForEvent} from "./teamService.ts";
+import {removeGamesForEvent} from "./gameService.ts";
 
 export const createNewEvent = async (eventName: string) => {
     const docRef = await addDoc(collection(db, collections.events), {
@@ -12,6 +14,8 @@ export const createNewEvent = async (eventName: string) => {
 }
 
 export const removeEvent = async (documentId: string) => {
+    await removeTeamsForEvent(documentId);
+    await removeGamesForEvent(documentId);
     await deleteDoc(doc(db, collections.events, documentId));
 }
 

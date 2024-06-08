@@ -1,4 +1,5 @@
 export const collections = {
     events: "events",
-    teams: "teams"
+    teams: "teams",
+    games: "games"
 }

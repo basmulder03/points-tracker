@@ -22,12 +22,12 @@ const SignIn = () => {
     } = useForm<Inputs>({mode: "all"});
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         await signInWithEmailAndPassword(auth, data.email, data.password);
-        navigate("/settings");
+        navigate("/points");
     }
 
     useEffect(() => {
         if (isLoggedIn) {
-            navigate('/settings')
+            navigate('/points')
         }
     }, [isLoggedIn, user]);
 

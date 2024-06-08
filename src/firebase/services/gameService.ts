@@ -2,21 +2,21 @@ import {addDoc, collection, deleteDoc, doc, getDocs, query, where, writeBatch} f
 import {db} from "../initializeFirebase.ts";
 import {collections} from "../collections.ts";
 
-export const createNewTeam = async (teamName: string, eventDocumentId: string) => {
-    const docRef = await addDoc(collection(db, collections.teams), {
-        name: teamName,
+export const createNewGame = async (gameName: string, eventDocumentId: string) => {
+    const docRef = await addDoc(collection(db, collections.games), {
+        name: gameName,
         eventDocumentId: eventDocumentId,
     });
 
     console.log("Document written with ID: ", docRef.id);
 }
 
-export const removeTeam = async (documentId: string) => {
-    await deleteDoc(doc(db, collections.teams, documentId));
+export const removeGame = async (documentId: string) => {
+    await deleteDoc(doc(db, collections.games, documentId));
 }
 
-export const removeTeamsForEvent = async (eventId: string) => {
-    const q = query(collection(db, collections.teams), where("eventDocumentId", "==", eventId));
+export const removeGamesForEvent = async (eventId: string) => {
+    const q = query(collection(db, collections.games), where("eventDocumentId", "==", eventId));
     const snapshot = await getDocs(q);
     const batch = writeBatch(db);
     snapshot.forEach((doc) => {

@@ -1,4 +1,4 @@
-export type Team = {
+export type Game = {
     name: string;
     eventDocumentId: string;
     documentId: string;
