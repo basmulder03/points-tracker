@@ -13,7 +13,7 @@ type Inputs = {
 
 const SignIn = () => {
     const navigate = useNavigate();
-    const {isLoggedIn, user} = useContext(UserContext);
+    const {isLoggedIn, user, loading} = useContext(UserContext);
 
     const {
         register,
@@ -26,10 +26,10 @@ const SignIn = () => {
     }
 
     useEffect(() => {
-        if (isLoggedIn) {
+        if (!loading && isLoggedIn) {
             navigate('/points')
         }
-    }, [isLoggedIn, user]);
+    }, [loading, isLoggedIn, user]);
 
     return (
         <div className={styles.container}>

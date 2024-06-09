@@ -2,20 +2,23 @@ import {createContext, useEffect, useState} from "react";
 import {onAuthStateChanged, User} from "firebase/auth";
 import {auth} from "../firebase/initializeFirebase.ts";
 
-const UserContext = createContext<{ user: User, isLoggedIn: boolean } | {
+const UserContext = createContext<{ user: User, isLoggedIn: boolean, loading: boolean } | {
     user: null,
-    isLoggedIn: boolean
-}>({user: null, isLoggedIn: false});
+    isLoggedIn: boolean,
+    loading: boolean,
+}>({user: null, isLoggedIn: false, loading: true});
 
 const UserContextProvider = (props: React.PropsWithChildren) => {
     const [user, setUser] = useState<User | null>(null);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(auth.currentUser !== null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        setIsLoading(true);
         const listener = onAuthStateChanged(auth, user => {
-            console.log({user, isLoggedIn: !!user})
             setUser(user)
             setIsLoggedIn(!!user);
+            setIsLoading(false);
         });
 
         return () => {
@@ -24,7 +27,7 @@ const UserContextProvider = (props: React.PropsWithChildren) => {
     }, []);
 
     return (
-        <UserContext.Provider value={{user, isLoggedIn}}>
+        <UserContext.Provider value={{user, isLoggedIn, loading: isLoading}}>
             {props.children}
         </UserContext.Provider>
     )

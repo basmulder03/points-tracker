@@ -34,7 +34,7 @@ const TeamSetting = () => {
             <div className={styles.itemContent}>
                 {
                     allTeams.filter(t => t.eventDocumentId === params.docId).map((team) => (
-                        <div className={`${styles.listItem}`}>
+                        <div className={`${styles.listItem}`} key={team.documentId}>
                             <div className={styles.name}>
                                 <FaTrashAlt className={styles.deleteIcon} onClick={() => deleteTeam(team.documentId)}/>
                                 {team.name}

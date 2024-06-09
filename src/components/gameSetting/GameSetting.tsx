@@ -36,7 +36,7 @@ const GameSetting = () => {
             <div className={styles.itemContent}>
                 {
                     allGames.filter(g => g.eventDocumentId === params.docId).map((game) => (
-                        <div className={`${styles.listItem}`}>
+                        <div className={`${styles.listItem}`} key={game.documentId}>
                             <div className={styles.name}>
                                 <FaTrashAlt className={styles.deleteIcon} onClick={() => deleteGame(game.documentId)}/>
                                 {game.name}

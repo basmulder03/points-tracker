@@ -1,12 +1,12 @@
 import {useContext, useEffect} from "react";
 import {UserContext} from "../../contexts/UserContext.tsx";
-import {Outlet, useLocation, useNavigate} from "react-router-dom";
+import {Link, Outlet, useLocation, useNavigate} from "react-router-dom";
 import {signOut} from "firebase/auth";
 import {auth} from "../../firebase/initializeFirebase.ts";
 import styles from "./Settings.module.less"
 
 const Settings = () => {
-    const {user, isLoggedIn} = useContext(UserContext);
+    const {user, isLoggedIn, loading} = useContext(UserContext);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -21,7 +21,7 @@ const Settings = () => {
     const hasSubPath = (subPath: "teams" | "games"): boolean => location.pathname.toLowerCase().includes(subPath.toLowerCase());
 
     useEffect(() => {
-        if (!isLoggedIn) navigate("/login");
+        if (!loading && !isLoggedIn) navigate("/login");
 
     }, [isLoggedIn]);
 
@@ -29,7 +29,10 @@ const Settings = () => {
         <div className={styles.container}>
             <div className={styles.header}>
                 Welkom, {user?.email}
-                <button onClick={logOut} className={styles.button}>SignOut</button>
+                <div>
+                    <Link to="/points" className={styles.link}>Points</Link>
+                    <button onClick={logOut} className={styles.button}>SignOut</button>
+                </div>
             </div>
             <div className={styles.navigator}>
                 <div className={`${styles.link} ${hasSubPath("teams") && styles.active}`} onClick={() => navigateToSetting("teams")}>

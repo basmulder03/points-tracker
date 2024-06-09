@@ -3,12 +3,10 @@ import {db} from "../initializeFirebase.ts";
 import {collections} from "../collections.ts";
 
 export const createNewGame = async (gameName: string, eventDocumentId: string) => {
-    const docRef = await addDoc(collection(db, collections.games), {
+    await addDoc(collection(db, collections.games), {
         name: gameName,
         eventDocumentId: eventDocumentId,
     });
-
-    console.log("Document written with ID: ", docRef.id);
 }
 
 export const removeGame = async (documentId: string) => {

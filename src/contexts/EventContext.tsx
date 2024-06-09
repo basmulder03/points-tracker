@@ -38,9 +38,8 @@ const EventContextProvider = (props: React.PropsWithChildren) => {
             setEvents(newEvents);
 
             const newActiveEvent = newEvents.find(event => event.isActive)
-            setActiveEvent(newActiveEvent || null)
-            setHasActiveEvent(newActiveEvent !== null);
-            console.log('Added events', newEvents, 'and set active event', newActiveEvent)
+            setActiveEvent(() => newActiveEvent || null)
+            setHasActiveEvent(() => newActiveEvent !== null);
         })
 
         return () => {

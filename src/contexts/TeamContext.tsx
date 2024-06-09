@@ -4,6 +4,7 @@ import {db} from "../firebase/initializeFirebase.ts";
 import {collections} from "../firebase/collections.ts";
 import {Team} from "../entities/Team.ts";
 import {EventContext} from "./EventContext.tsx";
+import {stringCompareFunction} from "../helpers/sortStrings.ts";
 
 const TeamContext = createContext<{
     allTeams: Team[],
@@ -30,6 +31,7 @@ const TeamContextProvider = (props: React.PropsWithChildren) => {
                     documentId: doc.id
                 })
             });
+            allTeams.sort((a, b) => stringCompareFunction(a.name, b.name))
             setTeams(() => allTeams)
         })
 

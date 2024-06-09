@@ -4,6 +4,7 @@ import {EventContext} from "./EventContext.tsx";
 import {collection, onSnapshot, query} from "firebase/firestore";
 import {db} from "../firebase/initializeFirebase.ts";
 import {collections} from "../firebase/collections.ts";
+import {stringCompareFunction} from "../helpers/sortStrings.ts";
 
 const GameContext = createContext<{
     allGames: Game[],
@@ -30,7 +31,8 @@ const GameContextProvider = (props: React.PropsWithChildren) => {
                     documentId: doc.id
                 });
             });
-            setGames(allGames);
+            allGames.sort((a, b) => stringCompareFunction(a.name, b.name));
+            setGames(() => allGames);
         });
 
         return () => {
