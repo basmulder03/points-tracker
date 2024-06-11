@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "lint": "eslint points-tracker --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "emulators": "firebase emulators:start",
+    "emulators": "firebase emulators:start"
   },
   "dependencies": {
     "firebase": "^10.12.0",
