@@ -35,7 +35,7 @@ const Points = () => {
         if (!loading && !isLoggedIn) {
             navigate("/login");
         }
-    }, []);
+    }, [isLoggedIn]);
 
     useEffect(() => {
         const newObject: {
@@ -123,6 +123,7 @@ const Points = () => {
             <div className={styles.header}>
                 Welkom, {user?.email}
                 <div>
+                    <Link to="/" className={styles.link}>Dashboard</Link>
                     <Link className={styles.link} to="/settings">Settings</Link>
                     <button onClick={logOut} className={styles.button}>Sign out</button>
                 </div>

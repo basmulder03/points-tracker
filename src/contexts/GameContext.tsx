@@ -38,7 +38,7 @@ const GameContextProvider = (props: React.PropsWithChildren) => {
         return () => {
             unsub();
         }
-    });
+    }, []);
 
     useEffect(() => {
         if (hasActiveEvent && activeEvent !== null) {

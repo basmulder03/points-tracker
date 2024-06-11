@@ -43,14 +43,14 @@ const DashboardContextProvider = (props: React.PropsWithChildren) => {
                 gamesInThisEvent.forEach(game => {
                     newObject[team.documentId].games[game.documentId] = {
                         gameName: game.name,
-                        points: points.find(p => p.eventDocumentId === activeEvent.documentId && p.gameDocumentId === game.documentId)?.amount!!
+                        points: points.find(p => p.eventDocumentId === activeEvent.documentId && p.gameDocumentId === game.documentId && p.teamDocumentId === team.documentId)?.amount ?? 0
                     }
                 });
             });
 
             setData(newObject);
         }
-    }, [activeEvent, teamsInThisEvent, gamesInThisEvent, points]);
+    }, [teamsInThisEvent, gamesInThisEvent, points]);
 
     return (
         <DashboardContext.Provider value={data}>
@@ -59,5 +59,12 @@ const DashboardContextProvider = (props: React.PropsWithChildren) => {
     )
 }
 
+const getSortedData = (rawData: DashboardContextInterface) => {
+    const values = Object.values(rawData);
+
+    values.sort((a, b) => b.totalPoints - a.totalPoints);
+    return values;
+}
+
 export default DashboardContextProvider;
-export {DashboardContext};
+export {DashboardContext, getSortedData};
