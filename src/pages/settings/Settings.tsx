@@ -35,7 +35,8 @@ const Settings = () => {
                 </div>
             </div>
             <div className={styles.navigator}>
-                <div className={`${styles.link} ${hasSubPath("teams") && styles.active}`} onClick={() => navigateToSetting("teams")}>
+                <div className={`${styles.link} ${hasSubPath("teams") && styles.active}`}
+                     onClick={() => navigateToSetting("teams")}>
                     Team Settings
                 </div>
                 <div className={`${styles.link} ${hasSubPath("games") && styles.active}`}
@@ -44,8 +45,9 @@ const Settings = () => {
                 </div>
             </div>
             <div className={styles.content}>
-                <Outlet />
+                <Outlet/>
             </div>
+            <div className={styles.copyright}>&copy; 2024 Bas Mulder</div>
         </div>
     )
 }

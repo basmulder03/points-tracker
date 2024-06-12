@@ -168,6 +168,7 @@ const Points = () => {
                     </>
                 )
             }
+            <div className={styles.copyright}>&copy; 2024 Bas Mulder</div>
         </div>
     )
 }
