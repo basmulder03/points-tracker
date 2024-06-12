@@ -36,12 +36,16 @@ const SignIn = () => {
             <div className={styles.signInBox}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div>
-                        <input type="email" className={styles.input} placeholder="Email" {...register("email", {required: true})} />
-                        <input type="password" className={styles.input} placeholder="Password" {...register("password", {required: true})} />
+                        <input type="email" className={styles.input}
+                               placeholder="Email" {...register("email", {required: true})} />
+                        <input type="password" className={styles.input}
+                               placeholder="Password" {...register("password", {required: true})} />
                     </div>
-                    <input type="submit" className={styles.submitButton} disabled={Object.keys(dirtyFields).length === 0} />
+                    <input type="submit" className={styles.submitButton}
+                           disabled={Object.keys(dirtyFields).length === 0}/>
                 </form>
             </div>
+            <div className={styles.copyright}>&copy; 2024 Bas Mulder</div>
         </div>
     )
 }
