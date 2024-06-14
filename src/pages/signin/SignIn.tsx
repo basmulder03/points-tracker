@@ -5,6 +5,7 @@ import {auth} from "../../firebase/initializeFirebase.ts";
 import {useNavigate} from "react-router-dom";
 import {useContext, useEffect} from "react";
 import {UserContext} from "../../contexts/UserContext.tsx";
+import {FirebaseError} from "firebase/app";
 
 type Inputs = {
     email: string;
@@ -21,8 +22,17 @@ const SignIn = () => {
         formState: {dirtyFields}
     } = useForm<Inputs>({mode: "all"});
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
-        await signInWithEmailAndPassword(auth, data.email, data.password);
-        navigate("/points");
+        try {
+            await signInWithEmailAndPassword(auth, data.email, data.password);
+            navigate("/points");
+        } catch (error) {
+            if (error instanceof FirebaseError) {
+                const err = error as FirebaseError;
+                if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
+                    alert('Incorrect username and/or password');
+                }
+            }
+        }
     }
 
     useEffect(() => {
