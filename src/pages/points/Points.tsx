@@ -35,7 +35,7 @@ const Points = () => {
         if (!loading && !isLoggedIn) {
             navigate("/login");
         }
-    }, [isLoggedIn]);
+    }, [loading, isLoggedIn]);
 
     useEffect(() => {
         const newObject: {

@@ -15,11 +15,12 @@ const UserContextProvider = (props: React.PropsWithChildren) => {
 
     useEffect(() => {
         setIsLoading(true);
+        setIsLoggedIn(auth.currentUser !== null);
         const listener = onAuthStateChanged(auth, user => {
             setUser(user)
             setIsLoggedIn(!!user);
-            setIsLoading(false);
         });
+        setIsLoading(false);
 
         return () => {
             listener();
