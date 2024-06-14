@@ -21,9 +21,13 @@ const Settings = () => {
     const hasSubPath = (subPath: "teams" | "games"): boolean => location.pathname.toLowerCase().includes(subPath.toLowerCase());
 
     useEffect(() => {
-        if (!loading && !isLoggedIn) navigate("/login");
+        if (!loading && !isLoggedIn) {
+            alert(loading)
+            alert(isLoggedIn)
+            navigate("/login");
+        }
 
-    }, [isLoggedIn]);
+    }, [loading, isLoggedIn]);
 
     return (
         <div className={styles.container}>

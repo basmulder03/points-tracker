@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import {createBrowserRouter, redirect, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, Navigate, redirect, RouterProvider} from "react-router-dom";
 import Dashboard from "./pages/dashboard/Dashboard.tsx";
 import SignIn from "./pages/signin/SignIn.tsx";
 import Points from "./pages/points/Points.tsx";
@@ -53,6 +53,9 @@ const router = createBrowserRouter([
                 ]
             }
         ]
+    }, {
+        path: "*",
+        element: <Navigate to={"/"}/>
     }
 ])
 
