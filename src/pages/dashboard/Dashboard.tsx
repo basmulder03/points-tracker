@@ -18,12 +18,12 @@ const Dashboard = () => {
             <Card title={activeEvent?.name ?? ""}/>
             <div className={styles.pointOverview}>
                 {
-                    getSortedData(data).map((obj, index) => (
+                    getSortedData(data).map((obj) => (
                         <div className={styles.teamDiv} key={obj.teamName}
                              onClick={() => switchOpenedTeam(obj.teamName)}>
                             <div className={styles.teamContainer}>
                                 <div className={styles.teamName}>
-                                    <b>#{index + 1}</b>
+                                    <b>#{obj.rank}</b>
                                     {obj.teamName}
                                     <i>({obj.totalPoints} punten)</i></div>
                                 {openedTeam === obj.teamName ? <MdOutlineArrowDropUp className={styles.teamIcon}/> :
