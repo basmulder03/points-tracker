@@ -3,6 +3,7 @@ import {EventContext} from "./EventContext.tsx";
 import {TeamContext} from "./TeamContext.tsx";
 import {GameContext} from "./GameContext.tsx";
 import {PointContext} from "./PointContext.tsx";
+import {calculateRanking} from "../helpers/calculateRanking.ts";
 
 interface DashboardContextInterface {
     [teamId: string]: {
@@ -13,7 +14,8 @@ interface DashboardContextInterface {
                 gameName: string,
                 points: number
             }
-        }
+        },
+        rank: number;
     }
 }
 
@@ -37,7 +39,8 @@ const DashboardContextProvider = (props: React.PropsWithChildren) => {
                     teamName: team.name,
                     totalPoints: points.filter(p => p.eventDocumentId === activeEvent.documentId && p.teamDocumentId === team.documentId)
                         .map(p => p.amount).reduce((a, b) => a + b, 0),
-                    games: {}
+                    games: {},
+                    rank: -1
                 }
 
                 gamesInThisEvent.forEach(game => {
@@ -46,6 +49,10 @@ const DashboardContextProvider = (props: React.PropsWithChildren) => {
                         points: points.find(p => p.eventDocumentId === activeEvent.documentId && p.gameDocumentId === game.documentId && p.teamDocumentId === team.documentId)?.amount ?? 0
                     }
                 });
+            });
+
+            Object.keys(newObject).forEach(key => {
+                newObject[key].rank = calculateRanking(Object.values(newObject).map(obj => obj.totalPoints), newObject[key].totalPoints);
             });
 
             setData(newObject);
