@@ -118,6 +118,7 @@ const Points = () => {
         setSelectedGame(null);
     }
 
+    const CURRENT_YEAR = new Date().getFullYear();
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -168,7 +169,7 @@ const Points = () => {
                     </>
                 )
             }
-            <div className={styles.copyright}>&copy; 2024 Bas Mulder</div>
+            <div className={styles.copyright}>&copy; 2024-{CURRENT_YEAR} Bas Mulder</div>
         </div>
     )
 }
