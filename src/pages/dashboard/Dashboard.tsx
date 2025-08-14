@@ -13,6 +13,7 @@ const Dashboard = () => {
 
     const switchOpenedTeam = (teamKey: string) => setOpenedTeam(() => openedTeam === teamKey ? "" : teamKey);
 
+    const CURRENT_YEAR = new Date().getFullYear();
     return (
         <div className={styles.app}>
             <Card title={activeEvent?.name ?? ""}/>
@@ -41,7 +42,7 @@ const Dashboard = () => {
                     ))
                 }
             </div>
-            <div className={styles.copyright}>&copy; 2024 Bas Mulder</div>
+            <div className={styles.copyright}>&copy; 2024-{CURRENT_YEAR} Bas Mulder</div>
         </div>
     )
 }

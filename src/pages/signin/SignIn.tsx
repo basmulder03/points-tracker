@@ -13,6 +13,7 @@ type Inputs = {
 }
 
 const SignIn = () => {
+    const CURRENT_YEAR = new Date().getFullYear();
     const navigate = useNavigate();
     const {isLoggedIn, user, loading} = useContext(UserContext);
 
@@ -55,7 +56,7 @@ const SignIn = () => {
                            disabled={Object.keys(dirtyFields).length === 0}/>
                 </form>
             </div>
-            <div className={styles.copyright}>&copy; 2024 Bas Mulder</div>
+            <div className={styles.copyright}>&copy; 2024-{CURRENT_YEAR} Bas Mulder</div>
         </div>
     )
 }
