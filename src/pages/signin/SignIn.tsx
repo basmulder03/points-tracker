@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {useContext, useEffect} from "react";
 import {UserContext} from "../../contexts/UserContext.tsx";
 import {FirebaseError} from "firebase/app";
+import {MdOutlineEmojiEvents, MdOutlineLock, MdOutlineMail} from "react-icons/md";
 
 type Inputs = {
     email: string;
@@ -44,15 +45,24 @@ const SignIn = () => {
 
     return (
         <div className={styles.container}>
+            <div className={styles.brand}>
+                <MdOutlineEmojiEvents className={styles.brandIcon}/>
+                <span>Points Tracker</span>
+            </div>
             <div className={styles.signInBox}>
+                <p className={styles.subtitle}>Log in om de stand bij te houden</p>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div>
+                    <label className={styles.field}>
+                        <MdOutlineMail className={styles.fieldIcon}/>
                         <input type="email" className={styles.input}
                                placeholder="Email" {...register("email", {required: true})} />
+                    </label>
+                    <label className={styles.field}>
+                        <MdOutlineLock className={styles.fieldIcon}/>
                         <input type="password" className={styles.input}
-                               placeholder="Password" {...register("password", {required: true})} />
-                    </div>
-                    <input type="submit" className={styles.submitButton}
+                               placeholder="Wachtwoord" {...register("password", {required: true})} />
+                    </label>
+                    <input type="submit" value="Inloggen" className={styles.submitButton}
                            disabled={Object.keys(dirtyFields).length === 0}/>
                 </form>
             </div>

@@ -1,18 +1,45 @@
 .card {
+  position: relative;
   display: flex;
   align-items: center;
-  background-color: #ffd4b5;
-  margin: 16px;
-  text-align: center;
-  font-size: 24px;
-  padding: 16px;
-  border-radius: 16px;
-  font-family: "Agency FB", serif;
-  min-height: 32px;
   justify-content: center;
+  margin: 24px 16px 32px;
+  padding: 28px 16px 24px;
+  text-align: center;
+  font-family: @font-display;
+  font-size: 42px;
+  letter-spacing: 0.05em;
+  color: @text-primary;
+  background: linear-gradient(180deg, @bg-surface-raised 0%, @bg-surface 100%);
+  border: 1px solid @border-subtle;
+  border-radius: @radius-lg;
+  box-shadow: @shadow-card;
+  min-height: 32px;
+  overflow: hidden;
 
-  &:hover {
-    background-color: #fdf3e5;
-    box-shadow: 0 0 3px #ffd4b5;
+  &::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 72px;
+    height: 4px;
+    border-radius: @radius-pill;
+    background: @accent;
+    box-shadow: 0 0 16px @accent-glow;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -40%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 140%;
+    background: radial-gradient(ellipse at center, @accent-glow, transparent 70%);
+    opacity: 0.4;
+    pointer-events: none;
   }
 }

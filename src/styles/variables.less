@@ -1,0 +1,154 @@
+// ---------------------------------------------------------------------------
+// Points Tracker design tokens — "Night Scoreboard" theme
+// Auto-imported (as reference) into every *.module.less file, see vite.config.ts
+// ---------------------------------------------------------------------------
+
+// Type
+@font-display: "Bebas Neue", "Arial Narrow", sans-serif;
+@font-body: "Manrope", "Segoe UI", sans-serif;
+
+// Surfaces
+@bg-void: #07080d;
+@bg-base: #0e0f17;
+@bg-surface: #171923;
+@bg-surface-raised: #1f2230;
+@bg-surface-hover: #262a3b;
+
+// Borders
+@border-subtle: rgba(255, 255, 255, 0.08);
+@border-strong: rgba(255, 255, 255, 0.16);
+
+// Text
+@text-primary: #f5f4ef;
+@text-muted: #9498ab;
+@text-dim: #62677d;
+
+// Accent — LED scoreboard green
+@accent: #c6ff35;
+@accent-dim: #8fbf1f;
+@accent-glow: rgba(198, 255, 53, 0.35);
+@on-accent: #0c1103;
+
+// Medal tones
+@medal-gold: #ffd60a;
+@medal-silver: #c7cfe0;
+@medal-bronze: #e0995e;
+
+// Danger
+@danger: #ff5468;
+@danger-dim: #c33e4d;
+
+// Radii
+@radius-sm: 8px;
+@radius-md: 14px;
+@radius-lg: 22px;
+@radius-pill: 999px;
+
+// Shadows
+@shadow-card: 0 4px 24px rgba(0, 0, 0, 0.45);
+@shadow-raised: 0 8px 32px rgba(0, 0, 0, 0.55);
+
+// Motion
+@ease: cubic-bezier(0.16, 1, 0.3, 1);
+@transition-fast: 0.15s @ease;
+@transition-base: 0.25s @ease;
+
+// ---------------------------------------------------------------------------
+// Mixins
+// ---------------------------------------------------------------------------
+
+.focus-ring() {
+  &:focus-visible {
+    outline: 2px solid @accent;
+    outline-offset: 2px;
+  }
+}
+
+.surface-card() {
+  background: @bg-surface;
+  border: 1px solid @border-subtle;
+  border-radius: @radius-lg;
+  box-shadow: @shadow-card;
+}
+
+.btn-reset() {
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.btn-primary() {
+  .btn-reset();
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: @accent;
+  color: @on-accent;
+  font-family: @font-body;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  padding: 12px 20px;
+  border-radius: @radius-pill;
+  transition: transform @transition-fast, box-shadow @transition-fast, background @transition-fast;
+  box-shadow: 0 0 0 rgba(198, 255, 53, 0);
+
+  &:hover:not(:disabled) {
+    box-shadow: 0 0 24px @accent-glow;
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background: @bg-surface-raised;
+    color: @text-dim;
+    cursor: not-allowed;
+  }
+}
+
+.btn-ghost() {
+  .btn-reset();
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: @text-muted;
+  border: 1px solid @border-strong;
+  padding: 10px 16px;
+  border-radius: @radius-pill;
+  font-family: @font-body;
+  font-weight: 700;
+  transition: color @transition-fast, border-color @transition-fast, background @transition-fast;
+
+  &:hover {
+    color: @text-primary;
+    border-color: @accent-dim;
+    background: rgba(198, 255, 53, 0.08);
+  }
+}
+
+.text-input() {
+  font-family: @font-body;
+  font-weight: 600;
+  color: @text-primary;
+  background: @bg-surface-raised;
+  border: 1px solid @border-strong;
+  border-radius: @radius-sm;
+  padding: 12px 14px;
+  transition: border-color @transition-fast, background @transition-fast;
+
+  &::placeholder {
+    color: @text-dim;
+    font-weight: 500;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: @accent;
+    background: @bg-surface-hover;
+  }
+}

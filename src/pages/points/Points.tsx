@@ -6,7 +6,15 @@ import {auth} from "../../firebase/initializeFirebase.ts";
 import styles from "./Points.module.less";
 import {GameContext} from "../../contexts/GameContext.tsx";
 import {EventContext} from "../../contexts/EventContext.tsx";
-import {MdOutlineArrowForwardIos} from "react-icons/md";
+import {
+    MdOutlineArrowBackIos,
+    MdOutlineArrowForwardIos,
+    MdOutlineDashboard,
+    MdOutlineLogout,
+    MdOutlineSettings,
+    MdOutlineSportsEsports
+} from "react-icons/md";
+import {IoSaveOutline} from "react-icons/io5";
 import {TeamContext} from "../../contexts/TeamContext.tsx";
 import {addPointsForGame} from "../../firebase/services/pointService.ts";
 import {PointContext} from "../../contexts/PointContext.tsx";
@@ -122,52 +130,59 @@ const Points = () => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                Welkom, {user?.email}
-                <div>
-                    <Link to="/" className={styles.link}>Dashboard</Link>
-                    <Link className={styles.link} to="/settings">Settings</Link>
-                    <button onClick={logOut} className={styles.button}>Sign out</button>
+                <span className={styles.welcome}>Welkom, {user?.email}</span>
+                <div className={styles.navLinks}>
+                    <Link to="/" className={styles.link}><MdOutlineDashboard/> Dashboard</Link>
+                    <Link className={styles.link} to="/settings"><MdOutlineSettings/> Settings</Link>
+                    <button onClick={logOut} className={styles.button}><MdOutlineLogout/> Sign out</button>
                 </div>
             </div>
             {
-                hasActiveEvent && (<>
+                hasActiveEvent ? (<>
                         <div className={styles.eventName} onClick={() => setSelectedGame(null)}>
                             <p>{activeEvent?.name}</p>
                         </div>
                         {
-                            selectedGame === null ? gamesInThisEvent.map((game) => (
-                                <div key={game.documentId} className={styles.game}
-                                     onClick={() => navigateToGame(game.documentId)}>
-                                    {game.name}
-                                    <MdOutlineArrowForwardIos/>
-                                </div>
-                            )) : (
-                                <>
-                                    <div
-                                        className={styles.gameName}>{gamesInThisEvent.find(g => g.documentId === selectedGame)?.name}
+                            selectedGame === null ? (
+                                gamesInThisEvent.length > 0 ? gamesInThisEvent.map((game) => (
+                                    <div key={game.documentId} className={styles.game}
+                                         onClick={() => navigateToGame(game.documentId)}>
+                                        <span className={styles.gameLabel}><MdOutlineSportsEsports/> {game.name}</span>
+                                        <MdOutlineArrowForwardIos/>
                                     </div>
-                                    {
-                                        teamsInThisEvent.map((team) => (
-                                            <div key={team.documentId} className={styles.game}>
-                                                {team.name}
-                                                <input type="number" className={styles.input}
-                                                       placeholder={`Type here the points for ${team.name}`}
-                                                       onChange={(e) => updatePoints(selectedGame, team.documentId, parseInt(e.target.value))}
-                                                       value={getValueOrNull(selectedGame, team.documentId) || ""}
-                                                />
-                                            </div>
-                                        ))
-                                    }
+                                )) : <div className={styles.emptyState}>Nog geen spellen toegevoegd.</div>
+                            ) : (
+                                <>
+                                    <div className={styles.gameName}>
+                                        <button className={styles.backButton} onClick={() => setSelectedGame(null)}>
+                                            <MdOutlineArrowBackIos/>
+                                        </button>
+                                        {gamesInThisEvent.find(g => g.documentId === selectedGame)?.name}
+                                    </div>
+                                    <div className={styles.teamList}>
+                                        {
+                                            teamsInThisEvent.map((team) => (
+                                                <div key={team.documentId} className={styles.game}>
+                                                    <span className={styles.gameLabel}>{team.name}</span>
+                                                    <input type="number" className={styles.input}
+                                                           placeholder="0"
+                                                           onChange={(e) => updatePoints(selectedGame, team.documentId, parseInt(e.target.value))}
+                                                           value={getValueOrNull(selectedGame, team.documentId) || ""}
+                                                    />
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
                                     <button className={styles.submitButton}
                                             disabled={Object.keys(pointsForGame[selectedGame] || {}).length !== teamsInThisEvent.length || !hasActiveEvent}
                                             onClick={() => persistPoints()}
-                                    >Save
+                                    ><IoSaveOutline/> Opslaan
                                     </button>
                                 </>
                             )
                         }
                     </>
-                )
+                ) : <div className={styles.emptyState}>Geen actief evenement.</div>
             }
             <div className={styles.copyright}>&copy; 2024-{CURRENT_YEAR} Bas Mulder</div>
         </div>
