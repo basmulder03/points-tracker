@@ -1,4 +1,4 @@
-import {addDoc, collection, deleteDoc, doc, getDocs, query, where, writeBatch} from "firebase/firestore";
+import {addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc, where, writeBatch} from "firebase/firestore";
 import {db} from "../initializeFirebase.ts";
 import {collections} from "../collections.ts";
 
@@ -7,6 +7,10 @@ export const createNewGame = async (gameName: string, eventDocumentId: string) =
         name: gameName,
         eventDocumentId: eventDocumentId,
     });
+}
+
+export const renameGame = async (documentId: string, gameName: string) => {
+    await updateDoc(doc(db, collections.games, documentId), {name: gameName});
 }
 
 export const removeGame = async (documentId: string) => {

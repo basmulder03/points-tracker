@@ -1,4 +1,4 @@
-import {addDoc, collection, deleteDoc, doc, getDocs, query, where, writeBatch} from "firebase/firestore";
+import {addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc, where, writeBatch} from "firebase/firestore";
 import {db} from "../initializeFirebase.ts";
 import {collections} from "../collections.ts";
 
@@ -7,6 +7,10 @@ export const createNewTeam = async (teamName: string, eventDocumentId: string) =
         name: teamName,
         eventDocumentId: eventDocumentId,
     });
+}
+
+export const renameTeam = async (documentId: string, teamName: string) => {
+    await updateDoc(doc(db, collections.teams, documentId), {name: teamName});
 }
 
 export const removeTeam = async (documentId: string) => {

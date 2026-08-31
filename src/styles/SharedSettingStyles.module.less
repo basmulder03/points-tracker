@@ -1,73 +1,174 @@
 .category {
+  .surface-card();
   flex: 1;
-
-  &:not(:last-child) {
-    border-right: 1px solid darkgray;
-  }
+  min-width: 280px;
+  max-width: 420px;
+  overflow: hidden;
 
   .itemContent {
     .listItem {
-      font-family: "Agency FB", serif;
-      font-size: 24px;
-      border-bottom: 1px solid darkgray;
-      padding: 16px;
+      font-family: @font-body;
+      font-weight: 600;
+      font-size: 15px;
+      color: @text-primary;
+      border-bottom: 1px solid @border-subtle;
+      padding: 14px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 12px;
+      transition: background @transition-fast;
+
+      &:last-child {
+        border-bottom: none;
+      }
 
       small {
-        font-style: italic;
-        margin: 0 8px;
+        font-style: normal;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        padding: 8px 12px;
+        border-radius: @radius-pill;
+        white-space: nowrap;
+        flex-shrink: 0;
+        cursor: pointer;
+      }
+
+      .activePill {
+        background: fade(@accent, 16%);
+        color: @accent;
+      }
+
+      .inactivePill {
+        background: transparent;
+        color: @text-dim;
+        border: 1px solid @border-strong;
 
         &:hover {
-          text-decoration: underline;
+          color: @text-primary;
+          border-color: @accent-dim;
         }
       }
 
       .name {
         display: flex;
         align-items: center;
+        gap: 6px;
+        flex: 1;
+        min-width: 0;
 
         .deleteIcon {
-          color: red;
-          margin-right: 8px;
-          display: none;
+          color: @text-dim;
+          flex-shrink: 0;
+          opacity: 0.6;
+          box-sizing: content-box;
+          padding: 10px;
+          margin: -10px;
+          font-size: 15px;
+          border-radius: 50%;
+          transition: color @transition-fast, opacity @transition-fast, background @transition-fast;
 
           &:hover {
-            color: darkred;
+            color: @danger;
+            opacity: 1;
+            background: fade(@danger, 12%);
+          }
+        }
+
+        .nameText {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          min-width: 0;
+        }
+
+        .editInput {
+          .text-input();
+          flex: 1;
+          min-width: 0;
+          padding: 6px 10px;
+          font-size: 15px;
+        }
+      }
+
+      .editIcon {
+        color: @text-dim;
+        opacity: 0.6;
+        flex-shrink: 0;
+        box-sizing: content-box;
+        padding: 10px;
+        margin: -10px;
+        font-size: 14px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: color @transition-fast, opacity @transition-fast, background @transition-fast;
+
+        &:hover {
+          color: @accent;
+          opacity: 1;
+          background: fade(@accent, 12%);
+        }
+      }
+
+      .editActions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-shrink: 0;
+
+        .saveIcon, .cancelIcon {
+          box-sizing: content-box;
+          padding: 10px;
+          margin: -10px;
+          border-radius: 50%;
+          cursor: pointer;
+          transition: color @transition-fast, background @transition-fast;
+        }
+
+        .saveIcon {
+          color: @accent;
+
+          &:hover {
+            background: fade(@accent, 14%);
+          }
+        }
+
+        .cancelIcon {
+          color: @danger;
+
+          &:hover {
+            background: fade(@danger, 14%);
           }
         }
       }
 
-      &:hover .deleteIcon {
-        display: block;
+      > svg, > div > svg {
+        flex-shrink: 0;
       }
 
       &:hover:not(.active) {
         cursor: pointer;
+        background: @bg-surface-raised;
       }
 
       &:hover, &.active {
-        background-color: #cfc5bb;
+        background: @bg-surface-hover;
       }
 
       input[type="text"] {
-        border: none;
-        background-color: transparent;
-        padding: 8px;
-        outline: none;
+        .text-input();
         flex: 1;
+        min-width: 0;
+        padding: 8px 12px;
       }
 
       button {
-        border: none;
-        background-color: blueviolet;
-        padding: 8px;
-        border-radius: 8px;
-
-        &:hover {
-          background-color: #e4afff;
-        }
+        .btn-primary();
+        padding: 10px 16px;
+        font-size: 13px;
+        flex-shrink: 0;
       }
     }
   }

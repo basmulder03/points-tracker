@@ -2,20 +2,29 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid darkgray;
-  padding: 16px;
+  border-bottom: 1px solid @border-subtle;
+  padding: 16px 20px;
 
   .itemHeader {
-    font-family: "Agency FB", serif;
-    font-size: 24px;
-    font-weight: bold;
-    padding: 4px;
+    font-family: @font-display;
+    font-size: 22px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: @text-primary;
   }
 
   .addIcon {
-    .icon:hover {
-      color: darkgray;
-      cursor: pointer;
+    display: flex;
+
+    .icon {
+      color: @accent;
+      transition: color @transition-fast, transform @transition-fast;
+
+      &:hover {
+        color: @text-primary;
+        transform: scale(1.08) rotate(90deg);
+        cursor: pointer;
+      }
     }
   }
 }
